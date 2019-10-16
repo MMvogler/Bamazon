@@ -2,7 +2,7 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 require("console.table");
 
-// Connection to database
+// Create connection to the database
 var connection = mysql.createConnection({
     host: "localhost",
     post: 3306,
@@ -11,6 +11,7 @@ var connection = mysql.createConnection({
     database:"bamazon"
 });
 
+// Initialize the connection to the database
 connection.connect(function(err){
     if (err) throw err;
     console.log("Connected as id: " + connection.threadId);
@@ -32,15 +33,17 @@ connection.query("SELECT * FROM products", function(err, res){
 } 
 
 // Prompt user to select an item for purchase
+// The name database instead of res 
 var startPrompt = function(database){
     inquirer.prompt({
 
         name:"productId",
         type:"input",
-        message:"What is the id number for the product you would like to buy?",
+        message:"What is the id number for the product you would like to buy?"
        
     }).then(function(answer){
         // console.log(answer);
+        // Turn customer's response into a number instead of a string
         var idChoice = parseInt(answer.productId);
         // console.log(idChoice);
         var product = quantityCheck(idChoice, database);
@@ -51,7 +54,6 @@ var startPrompt = function(database){
             console.log("Item does not exist");
         }
     });
-
     
 }
 
@@ -61,9 +63,22 @@ for (let i = 0; i < database.length; i++) {
     if (database[i].item_id === idChoice) {
         return database[i];
     } 
+    secondPrompt(); 
 } 
     return null;
     // console.table(idChoice, database);
+    
 }
 
+function secondPrompt(database, product){
+    inquirer.prompt({
+    name:"productQuantity",
+    type:"input",
+    message:"How many units would you like to buy?"
+})
+// .then (function(product, productQuantity){
+    
+// })
+
+}
 
