@@ -70,15 +70,22 @@ for (let i = 0; i < database.length; i++) {
     
 }
 
-function secondPrompt(database, product){
+function secondPrompt(stock_quantity, product){
+
     inquirer.prompt({
     name:"productQuantity",
     type:"input",
     message:"How many units would you like to buy?"
-})
-// .then (function(product, productQuantity){
     
-// })
+}).then (function(answer){
+    if(stock_quantity > answer){
+        connection.query()
+    } else {
+        console.log("Insufficient quantity");
+        startPrompt(res);
+    }
+    
+})
 
 }
 
