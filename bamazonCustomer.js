@@ -41,7 +41,8 @@ var startPrompt = function(database){
         type:"input",
         message:"What is the id number for the product you would like to buy?"
        
-    }).then(function(answer){
+    },
+    ).then(function(answer){
         // console.log(answer);
         // Turn customer's response into a number instead of a string
         var idChoice = parseInt(answer.productId);
